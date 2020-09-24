@@ -1,0 +1,16 @@
+package sparkcore
+
+import org.apache.spark.sql._
+
+object ReadCSVData {
+  def main(args: Array[String]) {
+    val spark = SparkSession.builder.master("local[*]").appName("newCSV").getOrCreate()
+    val sc = spark.sparkContext
+
+    val data="C:\\BigData\\DATASETS_NEW\\movies.csv"
+    val df = spark.read.format("csv").option("dateformat","dd/MM/YYYY").option("inferSchema","true").option("header","true").load(data)
+    df.printSchema()
+    df.show()
+    spark.stop()
+  }
+}
